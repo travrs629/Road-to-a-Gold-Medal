@@ -210,9 +210,11 @@
          - A common case is that the call stack exceeds due to excessive deep or infinite recursion.
       - **From now on, every count would be named as `c`.**
    
-**6. cuttingSquares**
+**6. cuttingSquares(BigInteger)**
    - status: **Failed**
    - ans: `n*m - 1`
+   ```
+   ```
    - explanation:
       - A single square takes zero cuts.
       - Every time a piece of paper is cut once to become 2 pieces, adding 1 to the total number of pieces.
