@@ -183,7 +183,7 @@
       - For example, 3*5*7 = 105, then in the range from 1 to 105, there are at most 3 prime **factors**.
    
 **5. connectingTowns(StackOverflowError)**
-   - status: **Failed due to soe technique issues**
+   - status: **Failed due to some technique issues**
    - ans: 
       - initial-ans:
       ```
@@ -213,13 +213,149 @@
 **6. cuttingSquares(BigInteger)**
    - status: **Failed**
    - ans: `n*m - 1`
-   ```
-   ```
+      - correct-ans:
+      ```
+      Dealing with large integers:
+      
+      Java(Understandable solution):
+      
+      static long solve(int n, int m) {
+         return BigInteger.valueOf(n).multiply(BigInteger.valueOf(m)).longValue()-1;
+      }
+      
+      Java(Intersting solution):
+
+      public class Solution {
+
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              long m = in.nextLong();
+              long n = in.nextLong();
+              long cuts = m*n-1;
+              System.out.println(cuts);
+          }
+      }
+      
+      public class Solution {
+
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              int n = in.nextInt();
+              int m = in.nextInt();
+              long result = (long)n*(long)m;
+              System.out.println(result - 1);
+          }
+      }
+      ```
    - explanation:
       - A single square takes zero cuts.
       - Every time a piece of paper is cut once to become 2 pieces, adding 1 to the total number of pieces.
       - A rectange of n squares takes `n - 1` cuts, adding rows or columns of m squares, the results would be `n*m - 1`.
          - Regarding the n and m, n*m is the area of the target paper, which is also the no. of papers we needed.
+      - The problem is with the multiplication of the inputs, which is in `int` type.
+         - The multiplication of `int` types overflows, which starts again from its minimum limit.
+         - If any one of the inputs (either `n` or `m` is casted to `long`), the problem could be prevented.
    
-   
-- 7. 
+**7. movingTiles(Velocity + RunTimeError + Math.cos())**
+   - status: **Success after father's help and checking discussion**
+   - ans: 
+      - `Velocity = Displacement / Change-in-Time`
+      - `Area = (x1 - x2) * (y1 - y2) [in time i]`
+         - `Area = (l - 0) * (l - 0) [in time 0]`
+         - `Area = ((l + s1*cos(45[degree])*i) - s2*cos(45[degree]*i)) * ((l + s1*cos(45[degree])*i) - s2*cos(45[degree]*i))`
+         - `Area = (l + (s1 - s2)*cos(45[degree]*i))`
+         - `r[i] = Math.abs((Math.sqrt(queries[i]) - l) / ((s1 - s2)*Math.cos(Math.toRadians(45))));`
+      - preferred-ans: The given-codes have runtime problem that have to be solved manually.
+      ```
+      Java:
+      import java.io.*;
+      import java.math.*;
+      import java.text.*;
+      import java.util.*;
+      import java.util.regex.*;
+
+      public class Solution {
+
+          /*
+           * Complete the movingTiles function below.
+           */
+          static double[] movingTiles(int l, int s1, int s2, long[] queries) {
+              /*
+               * Write your code here.
+               */
+               double[] r = new double[queries.length];
+               for(int i = 0; i < queries.length; i++) {
+                  r[i] = Math.abs((Math.sqrt(queries[i]) - l) / ((s1 - s2)*Math.cos(Math.toRadians(45))));
+               }
+               return r;
+          }
+
+          private static final Scanner scanner = new Scanner(System.in);
+
+          public static void main(String[] args) throws IOException {
+              BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+              String[] lS1S2 = scanner.nextLine().split(" ");
+              scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])*");
+
+              int l = Integer.parseInt(lS1S2[0]);
+
+              int s1 = Integer.parseInt(lS1S2[1]);
+
+              int s2 = Integer.parseInt(lS1S2[2]);
+
+              int queriesCount = scanner.nextInt();
+              scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])*");
+
+              long[] queries = new long[queriesCount];
+
+              for (int queriesItr = 0; queriesItr < queriesCount; queriesItr++) {
+                  long queriesItem = scanner.nextLong();
+                  scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])*");
+                  queries[queriesItr] = queriesItem;
+              }
+            
+              double[] result = movingTiles(l, s1, s2, queries);
+
+              for (int resultItr = 0; resultItr < result.length; resultItr++) {
+                  bufferedWriter.write(String.valueOf(result[resultItr]));
+
+                  if (resultItr != result.length - 1) {
+                      bufferedWriter.write("\n");
+                  }
+              }
+
+              bufferedWriter.newLine();
+
+              bufferedWriter.close();
+
+              scanner.close();
+          }
+      }
+      ```
+   - explanation:
+      - We have to calculate `i` given the target area, but for simplicity, we just construct a area formula first.
+      - `qi` is the target area that we want to calculate, and thus the information we need to find out is the top right point of the square with lower velocity and the bottom left point of the other square with higher velocity.
+      - Noticeably, The overlapping area of tiles would become smaller and smaller.
+         - Consider the absolute value of the difference in velocities, we get the relative velocity.
+         - The velocity is restricted to an angle of 45, which then we evaluate it as cos45 or sin45.
+         - The `Math.cos()` receives input of radian instead of degree, which we need a transformation using `Math.toRadian()`.
+      - **The `int` data type is often unreliable with mathematical calculations, `long` or `BigInteger` is preferred more.
+      - **For all arrays with for loops used, the i should be set at 0 with only "<" used as the condition.**
+      
+**8. bestDivisor**
+   - status:
+   - ans:
+   - explanation:
+      - **The inputs inside and outside of a method can be the same in competitive programming.**
+      - **Some methods are self-designed and some are pre-designed, but both of them are methods(seems obvious but actually no).**
+      - **No space between the name of methods and constructors and the brackets.**
+      - **Remember the variable to be assigned must be put to the left of the equality.**
+      - **Boolean flag would be set as `fg` from now on.**
+      - **`break` terminates the current loop statement and move on to the next line of codes.**
+      - **All inputs for methods would be called `in` if `r` is used.**
+      - **All outputs for methods would be called `ot` if `r` is used.**
+      - **All smaller variables after should be set with the bigger one with the last vocab.**
+      - **The temperary variable from now on would be called `tm`.**
+      - **A blank class should be set so to test out small problems in competitive programming(as a beginner).**
+      - **If a number cannot be divisible for another number, the output would be 0.**
