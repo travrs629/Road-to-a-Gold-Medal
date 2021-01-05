@@ -349,7 +349,7 @@
    - explanation:
       - **The inputs inside and outside of a method can be the same in competitive programming.**
       - **Some methods are self-designed and some are pre-designed, but both of them are methods(seems obvious but actually no).**
-      - **No space between the name of methods and constructors and the brackets.**
+      - **Add space between the name of methods and constructors and the brackets.**
       - **Remember the variable to be assigned must be put to the left of the equality.**
       - **Boolean flag would be set as `fg` from now on.**
       - **`break` terminates the current loop statement and move on to the next line of codes.**
