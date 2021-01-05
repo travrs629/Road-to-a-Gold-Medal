@@ -344,8 +344,144 @@
       - **For all arrays with for loops used, the i should be set at 0 with only "<" used as the condition.**
       
 **8. bestDivisor**
-   - status:
+   - status: **Success after checking discussion**
    - ans:
+      - initial-ans:
+      ```
+      static int bestDivisor(int[] in){
+         int r = in[0];
+         int rsum = 1; 
+         int tm = 0;
+
+         for (int i = 1; i <= in.length; i++) {
+            for (int j = 5; j >= 1; j--) {
+               tm += in[i] / Math.pow(10, j);
+            }
+            if(rsum < tm) {
+               r = in[i];
+               rsum = tm;
+            } else if (rsum == tm) {
+               if (r > in[i]) {
+                  r = in[i];
+                  rsum = tm;
+               } 
+            }
+         }
+         return r;
+      }
+	
+      static int[] allDivisor(int n) {
+         int[] r = new int[n/2];
+         int k = 0;
+         boolean fg = true;
+         for (int i = 1; i <= n/2; i++) {
+            if(n % i == 0) {
+               for (int j = 0; j < r.length; j++) {
+                  if(i == r[j]) {
+                     fg = false;
+                     break;
+                  }
+               }
+               if (fg == true) {
+                  r[k] = i;
+                  r[k+1] = n / i;
+                  k += 2;
+               }
+            }
+         }
+         return r;
+      }
+      ```
+      - correct-ans:
+      ```
+      Java:
+      import java.io.*;
+      import java.math.*;
+      import java.security.*;
+      import java.text.*;
+      import java.util.*;
+      import java.util.concurrent.*;
+      import java.util.regex.*;
+
+      public class bestDivisor {
+
+          private static final Scanner scanner = new Scanner(System.in);
+
+          public static void main(String[] args) {
+              long n = scanner.nextLong();
+              scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+              scanner.close();
+
+              long tm = 0, rsum = 0, r = 0;
+              long s = 0;
+              for (long i = 1; i <= n; i++) {
+                  if (n%i == 0) {
+                     tm = i;
+                     for (int j = 5; j >= 1; j--) {
+                        s += tm % Math.pow(tm, j);
+                     }
+                      while (tm != 0) {
+                          s += tm%10; // Even if tm is really big(for example 1200), tm % 10 would always be 0.
+                          tm /= 10;
+                      }
+                      if (s > rsum) {
+                          rsum = s;
+                          r = i;
+                      } else if (s == rsum) {
+                          if (r > i) {
+                              r = i;
+                          }
+                      }
+                  }
+                  s = 0;
+              }
+              System.out.println(r);
+          }
+      }
+      
+      Java:
+      import java.io.*;
+      import java.math.*;
+      import java.security.*;
+      import java.text.*;
+      import java.util.*;
+      import java.util.concurrent.*;
+      import java.util.regex.*;
+
+      public class bestDivisor {
+
+          private static final Scanner scanner = new Scanner(System.in);
+
+          public static void main(String[] args) {
+              long n = scanner.nextLong();
+              scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+              scanner.close();
+
+              long tm = 0, rsum = 0, r = 0;
+              long s = 0;
+              for (long i = 1; i <= n; i++) {
+                  if (n%i == 0) {
+                     tm = i;
+                     for (int j = 5; j >= 1; j--) {
+                        s += tm % (int)Math.pow(tm, j);
+                     }
+                     if (s > rsum) {
+                          rsum = s;
+                          r = i;
+                      } else if (s == rsum) {
+                          if (r > i) {
+                              r = i;
+                          }
+                      }
+                  }
+                  s = 0;
+              }
+              System.out.println(r);
+          }
+      }
+      The only difference above is the loop that adds up the digits, which one uses a for-loop and one uses a while loop.
+      It is more suitable to use the while loop, as the for loop can not produce the correct digits as it is changed to long type instead of int type.
+      ```
    - explanation:
       - **The inputs inside and outside of a method can be the same in competitive programming.**
       - **Some methods are self-designed and some are pre-designed, but both of them are methods(seems obvious but actually no).**
@@ -359,3 +495,60 @@
       - **The temperary variable from now on would be called `tm`.**
       - **A blank class should be set so to test out small problems in competitive programming(as a beginner).**
       - **If a number cannot be divisible for another number, the output would be 0.**
+      - ** Keep the codes as simple as possible.**
+      - **Never use `int` to do mathematical questions, use `long` instead.**
+      - **Competitive programming is about finding the most efficient way to finish the task. That's it.**
+      - **Remember if any `double` type is used, the `int` calculation would become `double`, which the remainder removal is not applied to the calculation anymore.**
+      
+**9. restaurant（Greatest Common factor）**
+   - status:
+   - ans: `GCD = the largest postive integer that divides each of the integer.`
+      - initial-ans:
+      ```
+      int os = l*b;
+    	int rLen = 0;
+    	
+    	if (l == b) {
+    		return 1;
+    	} else {
+    		for (int i = 1; i < l || i < b; i++) {
+    			if (os % (int)Math.pow(i, 2) == 0) {
+    				if (i > rLen) {
+    					rLen = i;
+    				}
+    			}
+    		}
+    	}
+    	int r = os / (int)Math.pow(rLen, 2);
+    	return r;
+      ```
+      - correct-ans:
+      ```
+      int os = l*b;
+    	int gcd = 0;
+    	
+    	if (l == b) {
+    		return 1; //gcd = l or b
+    	} else {
+    		for (int i = 1; i < l || i < b; i++) {
+    			if ((l %i == 0) && (b % i == 0)) {
+    				if (i > gcd) {
+    					gcd = i;
+    				}
+    			}
+    		}
+    	}
+    	int r = os / (int)Math.pow(gcd, 2);
+    	return r;
+      ```
+   - explanation:
+      - Greatest factor of a number does not equal to the greatest common factor of two numbers, even if those two number multiplies and become that number.
+         - Instead, the greatest number of that number must be one of the two numbers, which is definitely not the target number.
+      - The method I used is problematic, after testing of changing to other variable types. But why?
+      
+**10. reverseGame**
+   - status:
+   - ans:
+   - explanation:
+      - **The most important thing about mathematics is about finding out the principles of data, which some of them is found decades ago with generalisation performed, some of them has to be found out by yourself.(In condition of competitive programming.)**
+      - **From now on, all array would be named as `arr`.**
