@@ -1,7 +1,7 @@
 # CP-related-Pratical
 ##Mathematics
 ### 2020.12.30
-**1. The mid-point formula**
+**1. indPoint(The mid-point formula)**
    - status: **Success after checking discussion**
    - ans: `mid-point = (first-coordinate + second coordinate) / 2`
       - `one-of-the-coordinate = 2*mid-point - the-other-of-the-coordinate`
@@ -83,6 +83,7 @@
       - **Constructors and methods cannot be used in a `return`.**
       - **All booleans are named as `rw` from now on.**
 
+## 2021.01.02
 **5. primeCount (distinct prime number & varialbes+arrays' limits)**
    - status: **Failed**
    - ans: 
@@ -209,7 +210,8 @@
          - A runtime error when the amount of call stack memory allocated by JVM is exceeded.
          - A common case is that the call stack exceeds due to excessive deep or infinite recursion.
       - **From now on, every count would be named as `c`.**
-   
+
+## 2021.01.03
 **6. cuttingSquares(BigInteger)**
    - status: **Failed**
    - ans: `n*m - 1`
@@ -342,7 +344,8 @@
          - The `Math.cos()` receives input of radian instead of degree, which we need a transformation using `Math.toRadian()`.
       - **The `int` data type is often unreliable with mathematical calculations, `long` or `BigInteger` is preferred more.
       - **For all arrays with for loops used, the i should be set at 0 with only "<" used as the condition.**
-      
+
+## 2021.01.04
 **8. bestDivisor**
    - status: **Success after checking discussion**
    - ans:
@@ -499,7 +502,8 @@
       - **Never use `int` to do mathematical questions, use `long` instead.**
       - **Competitive programming is about finding the most efficient way to finish the task. That's it.**
       - **Remember if any `double` type is used, the `int` calculation would become `double`, which the remainder removal is not applied to the calculation anymore.**
-      
+
+## 2021.01.05
 **9. restaurant（Greatest Common factor）**
    - status:
    - ans: `GCD = the largest postive integer that divides each of the integer.`
@@ -545,10 +549,112 @@
       - Greatest factor of a number does not equal to the greatest common factor of two numbers, even if those two number multiplies and become that number.
          - Instead, the greatest number of that number must be one of the two numbers, which is definitely not the target number.
       - The method I used is problematic, after testing of changing to other variable types. But why?
-      
+
+## 2021.01.06
 **10. reverseGame**
-   - status:
-   - ans:
+   - status: **Success after checking hints**
+   - ans: `last index = (n - 2 + n % 2)/2 = original middle number of the list`
+      - initial-ans:
+      ```
+      int r = 0;
+      if ((n - 1) % 2 == 0) { // n = even number
+      		if (k >= (n - 1)/2 + 1) {
+            		r = ((n - 1) - k) * 2;
+            	} else {
+            		r = k*2 + 1;
+            	}
+            } else { // n = odd number
+            	if (k >= (n - 1)/2) {
+            		r = ((n - 1) - k) * 2;
+            	} else {
+            		r = k*2 + 1;
+            	}
+      }
+      System.out.println(r);
+      ```
+      - correct-ans:
+      ```
+      Java:
+      Breaking the formula inito two parts:
+      int r = 0;
+            
+      if (k >= (n - 1) - k) {
+            	r = 2*((n - 1) - k);
+      } else {
+            	r = 2*k + 1;
+      }
+      System.out.println(r);
+      
+      Java:
+      int r = 0;
+      if (n % 2 == 0) { // n = even number
+      		if (k >= (n - 1)/2 + 1) {
+            		r = ((n - 1) - k) * 2;
+            	} else {
+            		r = k*2 + 1;
+            	}
+            } else { // n = odd number
+            	if (k >= (n - 1)/2) {
+            		r = ((n - 1) - k) * 2;
+            	} else {
+            		r = k*2 + 1;
+            	}
+      }
+      System.out.println(r);
+      ```
+      - **How to output multiple inputs:**
+      ```
+      private static final Scanner scanner = new Scanner(System.in);
+      
+      public static void main(String[] args) throws IOException {
+      	BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int t = scanner.nextInt(); // t = the pairs of input that received.
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])*"); // String that have to be skipped.
+
+        for (int tItr = 0; tItr < t; tItr++) {
+	 // The assignment of the array and other variables happens according to the no. of t.
+	 // The assignment, calculation and stdout happens multiple times.
+            String[] lb = scanner.nextLine().split(" "); 
+            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])*");
+
+            int l = Integer.parseInt(lb[0]);
+
+            int b = Integer.parseInt(lb[1]);
+
+            int result = restaurant(l, b);
+	    
+	    // The bufferedWriter methods could be replaced by System.out.println(result) in multiple situations.
+            bufferedWriter.write(String.valueOf(result));
+            bufferedWriter.newLine();
+        }
+	 // The closure of bufferedWriter and scanner must be located after the iteration.
+        bufferedWriter.close();
+
+        scanner.close();
+      }
+      ```
    - explanation:
       - **The most important thing about mathematics is about finding out the principles of data, which some of them is found decades ago with generalisation performed, some of them has to be found out by yourself.(In condition of competitive programming.)**
       - **From now on, all array would be named as `arr`.**
+      - The question asked for the position of ball numbered `k` instead of the ball at position `k`.
+      - **Be careful of outputing the inputs, which could be more than one. If the question did not provide enough codes, you may have to write it yourself.**
+      - **From now on, the iteration of pairs of inputs is named as `titr` which stands for `iterations of t`.**
+      - `n` only indicates the no. of each numbers, but the actuall max. number is `n - 1`.
+      - There is two formula(two trends) in this question and we must find a way to decide whether the input number belongs to which formula.
+         - Either by finding whether the number is bigger or smaller to the major part of the range from 1 to n: `k >= (n - 1) - k`
+	 - Or by finding whether the no. belongs to the part larger or smaller than the middle number of the range from 1 to n, with the fidnings of whether the number range is even or odd: `n % 2 == 0`
+	 - Tho actually the actual range is from 0 to n-1.
+	 
+**11. strangeGrid**
+   - status: **Success after multiple tries**
+   - ans: Just find out the relationship of each rows and columns respectively.
+      - Just like how we learnt before.
+   - explanation:
+      - **If the data type of `parse[datatype]()` is changed, the data type before it should also be changed.**
+         - e.g. `Integer.parseInt()` should be changed to `Long.parseLong()`
+
+**12. lights**
+   - status:
+   - ans:
+   - explanation:
