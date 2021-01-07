@@ -654,7 +654,160 @@
       - **If the data type of `parse[datatype]()` is changed, the data type before it should also be changed.**
          - e.g. `Integer.parseInt()` should be changed to `Long.parseLong()`
 
-**12. lights**
+## 2020.01.07
+**12. lights(Combination formula)**
+   - status: **Success after listing out conditions**
+   - ans: `nCr = n!/((n-r)!*r!)`
+      - intial-ans:
+      ```
+      long r = 0;
+      for (long i = 1; i <= n; i++) {
+    		r += factorials(n) / (factorials(n - i) * factorials(i)) % 100000;
+    	}
+    	return r;
+     }
+    
+     static long factorials(long n) {
+    	if (n == 0) {
+    		return 1;
+    	}
+    	return n*factorials(n-1);
+      }
+      ```
+      - correct-ans: `Math.pow(2, n)`
+      ```
+      long r = 1;
+      for (long i = 1; i <= n; i++) {
+      	r = r*2 % 100000;
+      }
+      return r - (1 % 100000);
+      ```
+   - explanation:
+      - The original answer takes too much memory and produces a `runtime error`.
+         - Both the memory size and the time must have been considered to prevent `overflow`.
+      - The question could be thought of an much easier way: `Math.pow(2, n)`.
+      
+**13. divisors**
+   - status: **Failed**
+   - ans:
+      - intial-ans:
+      ```
+      int r = 0;
+      for (long i = 1; i <= n; i++) {
+      	 if (n % i == 0) {
+    	    if (i % 2 == 0) {
+    	       r += 1;
+    	    }
+    	 }
+      }
+      return r;
+      ```
+      - correct-ans:
+      ```
+      Python:
+      def divisors(n):
+    	count = 0
+    	for i in range(1,int(math.sqrt(n))+1):
+        if n%i==0 and i%2==0:
+            # i is even
+            count+=1
+        if n%(n//i)==0 and (n//i)%2==0:
+            # n//i is even and n's factor
+            count+=1
+        if i==n//i and i%2==0 and n%i==0:
+            # if i is sqrt reduce by 1
+            count-=1
+    	return count
+      Java:
+      static int divisors(int n) {
+    	int r = 0;
+        if (n % 2 == 0) {
+        	for(long i = 2;i <= Math.sqrt(n); i++){ // That's why it is math.sqrt(), but why not n/2??
+        		// If i^2 is already larger than n, than the no. is already a target in n/i test.
+            	// the factor must be equal or bigger than 2 to be calculated.
+            	
+                if((n % i == 0) && (i % 2 == 0)) { // Whether i is a valid divisor.
+                	r++;
+                }
+                if((n % (n/i) == 0) && ((n/i) != i) && ((n/i) % 2 == 0)) { // Whether n/i is a valid divisor.
+                    r++;
+                }
+            }
+            if(n % 2 == 0) { // Whether n/1 is a valid divisor.
+                	r++;
+            }
+        }	 
+        return r;
+    	}
+      ```
+   - explanation:
+      - The original answer takes too much time and produces a `time limit exceeded`.
+      - **All odd number `n` has 0 target output.**
+      - The above `java` codes explains everything.
+         - **Noticeably, if divisor is required to be found, there is no need of checking every no. from 1 to `n` in the `for` loop.**
+	 
+**14. gameWithCells**
+   - status: **Failed**
+   - ans:
+      - initial-ans:
+      ```
+      long nm = n*m;
+    	long r = 0;
+    	if (nm % 2 == 0 ) { // nm = even
+    		r = nm / 2 - (long)Math.floor(nm / 4);
+    	} else { // nm = odd
+    		r = (nm + 1) / 2;
+    	}
+    	return r;
+      ```
+      - correct-ans:
+      ```
+      Java:
+      int r = ((n+1)/2) * ((m+1)/2);
+      return r;
+      Java:
+      long r = (n+n%2) * (m+m%2)/4;
+      return r;
+      ```
+   - explanation:
+      - If `n` is even, it will round down. If it is odd, then simply acts as thought it were a slightly larger graph with an even number of rows.
+      
+**15. haloweenParty**
+   - status: **Success after checking discussion**
+   - ans:
+   ```
+   static long halloweenParty(int k) {
+        /*
+         * Write your code here.
+         */
+    	long r = (k - k/2) * (k/2);
+    	return r;
+    }
+   ```
+   - explanation:
+      - THe no. of cuts must be equally distributed to rows and clumns for `1*1` pieces.
+      - The pieces of chocolate is actually fixed as the no. of cuts are specified with `1*1` pieces.
+      - **It is always a great way to change the input type to `long` when the output type is `long`**
+         - As usually the memory space is not enough(without specified).
+      - **It seems like usually `long` is already enough to solve the problem.**
+      
+**16. fillingJars**
+   - stauts: **Success**
+   - ans: `output = ((lastJar - (firstJar - 1)) * noOfCandies) / totalNoOfJars`
+   - explanation: 
+      - **Just always change the data size to `long` please, that's just being disgusting.**
+      - **However, remember the value of array size must be either `int`, `short` , `byte` or `char` primitive data type.**
+      
+**17. floatingRock(linear equation)**
    - status:
    - ans:
    - explanation:
+      - forms for the equation of a line:
+         - slope-intercept: `y = m(slope)x+ b(y-intercept)`
+	 - two-point form: `(y - y1) / (x - x1) = (y2 - y1) / (x2 - x1)`
+	 - point-slope: `y - y1 = m(x - x1)`
+	 - standard form: `a(must be positive)x + by = c`
+	 - intercept form: `x/a + y/b = 1`
+	 - vertical: `x = a(x-intercept)`
+	 - horizontal: `y = b`
+      - **Remember if the condition is set at its lower limit, the initialisation of `i` must be bigger than that.**
