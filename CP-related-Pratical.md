@@ -797,10 +797,144 @@
    - explanation: 
       - **Just always change the data size to `long` please, that's just being disgusting.**
       - **However, remember the value of array size must be either `int`, `short` , `byte` or `char` primitive data type.**
+
+## 2020.01.08
+**17. floatingRock(linear equation + Euclidean Algorithm)**
+   - status: **Failed(Need revision)**
+   - ans: `Euclidean Algorithm: [dividend] = [divisor]*[quotient] + [remainder]`
+      - `[divisor] / [remainder] until [remainder] = 0`
+      - `then gcd([dividend],[divisor]) = [last divisor]`
+      - initial-ans:
+      ```
+      static long solve(long x1, long y1, long x2, long y2) {
+    	long s = (y2 - y1) / (x2 - x1);
+    	long r= 0;
+    	if (x2 > x1) {
+    		for (long i = x1 + 1; i > x1 && i < x2; i++) {
+    			if(y2 > y1) {
+    				for (long j = y1 + 1; j > y1 && j < y2; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+            		}
+    			} else if (y2 == y1) {
+    				for (long j = y1 + 1; j >= y1 && j <= y2; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+    				}
+    			} else {
+    				for (long j = y2 + 1; j >= y2 && j <= y1; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+    				}
+    			}
+    		}
+    	} else if (x2 == x1) {
+    		for (long i = x1 + 1; i >= x1 && i <= x2; i++) {
+    			if(y2 > y1) {
+    				for (long j = y1 + 1; j > y1 && j < y2; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+            		}
+    			} else if (y2 == y1) {
+    				for (long j = y1 + 1; j >= y1 && j <= y2; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+    				}
+    			} else {
+    				for (long j = y2 + 1; j >= y2 && j <= y1; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+    				}
+    			}
+    		}
+    	} else {
+    		for (long i = x2 + 1; i > x2 && i < x1; i++) {
+    			if(y2 > y1) {
+    				for (long j = y1 + 1; j > y1 && j < y2; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+            		}
+    			} else if (y2 == y1) {
+    				for (long j = y1 + 1; j >= y1 && j <= y2; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+    				}
+    			} else {
+    				for (long j = y2 + 1; j >= y2 && j <= y1; j++) {
+            			long c = (j - y1) / (i - x1);
+            			if (c == s) {
+            				r++;
+            			}
+    				}
+    			}
+    		}
+    	}
+    	return r;
+      }
+      ```
+      - correct-ans:
+      ```
+      Let the fraction a / b in its reduced form be the slope of the line joining P(x1, y1) and Q(x2, y2), which is equal to (y1 - y2) / (x1 - x2).
       
-**17. floatingRock(linear equation)**
-   - status:
-   - ans:
+      To get all the points with integral coordinates, lying on the line PQ and between P and Q, we need to keep moving b units in the x-direction and a unit in the y-direction, starting from P until we reach Q.
+      
+      So the number of such points (excluding P and Q) is given by n, where
+      
+      n = abs((y1 - y2)/a) - 1
+      
+      or equivalently,
+      
+      n = abs((x1 - x2)/b) - 1
+      
+      However, since
+      
+      a = (y1 - y2)/g
+      
+      and 
+      
+      b = (x1 - x2)/g
+      
+      where 
+      
+      g = gcd(y1 - y2, x1 - x2)
+      
+      we have
+      
+      n = abs(g) - 1
+      
+      To express a fraction x/y in its reduced form, we divide x and y by gcd(x, y). For example, to get the reduced form of 2/4, we have to divide the numerator(dividend) and denominator(divisor) by 2 = gcd(2, 4).
+      ```
+      ```
+      static long solve(long x1, long y1, long x2, long y2) {
+    	long g = gcdByEuclidsAlgorithm(y2 - y1, x2 - x1);
+    	long r = (long)Math.abs(g) - 1;
+    	return r;
+    	
+    }
+    
+    static long gcdByEuclidsAlgorithm(long n1, long n2) {
+    	if (n2 == 0) {
+    		return n1;
+    	}
+    	return gcdByEuclidsAlgorithm(n2, n1 % n2);
+      }
+      ```
    - explanation:
       - forms for the equation of a line:
          - slope-intercept: `y = m(slope)x+ b(y-intercept)`
@@ -811,3 +945,13 @@
 	 - vertical: `x = a(x-intercept)`
 	 - horizontal: `y = b`
       - **Remember if the condition is set at its lower limit, the initialisation of `i` must be bigger than that.**
+      - **In many math problems, it is useful to find an invariant, which is the slope in this question.**
+      - The slope in reduced form would give the smallest rise and run from one point to the next. So in total `abs(gcd(rise, run)) - 1` times(minus one because of the outer point).
+         - `(y1 - y2)/(x1 - x2) = ((y1 - y2)/gcd)/((x1 - x2)/gcd) [reduced]`
+      - **Usually in mathematic questions, divide-and-conquer method is often not the best solution.**
+      - In `BigInteger` class, `[firstValue].gcd([secondValue])` could be used to find the gcd.
+
+**18. peasantExponentiation**
+   - status:
+   - ans:
+   - explanation:
