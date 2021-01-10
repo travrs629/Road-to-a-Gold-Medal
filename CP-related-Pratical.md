@@ -951,7 +951,9 @@
       - **Usually in mathematic questions, divide-and-conquer method is often not the best solution.**
       - In `BigInteger` class, `[firstValue].gcd([secondValue])` could be used to find the gcd.
 
-**18. peasantExponentiation**
+**18. celebrityJeopardy**
    - status:
    - ans:
    - explanation:
+      - The major problem is about separating the symbol and value, as well as finding out the no. of spaces.
+         - The symbol must be the first character in the `string`.
