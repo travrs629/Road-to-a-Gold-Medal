@@ -957,3 +957,11 @@
    - explanation:
       - The major problem is about separating the symbol and value, as well as finding out the no. of spaces.
          - The symbol must be the first character in the `string`.
+
+## 2021.05.10
+**19. Roman Numerals**
+   - status: 
+   - ans: 
+   - explanation:
+      - The actual problem is about the 4 and 9 which cannot be represents by using three consecutive roman numbers.
+      - 
