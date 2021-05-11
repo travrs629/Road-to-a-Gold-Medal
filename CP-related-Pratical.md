@@ -951,17 +951,26 @@
       - **Usually in mathematic questions, divide-and-conquer method is often not the best solution.**
       - In `BigInteger` class, `[firstValue].gcd([secondValue])` could be used to find the gcd.
 
+## 2021.05.10
 **18. celebrityJeopardy**
    - status:
    - ans:
    - explanation:
       - The major problem is about separating the symbol and value, as well as finding out the no. of spaces.
          - The symbol must be the first character in the `string`.
+         - if ()
 
-## 2021.05.10
 **19. Roman Numerals**
-   - status: 
+   - status: **Hold**
    - ans: 
    - explanation:
       - The actual problem is about the 4 and 9 which cannot be represents by using three consecutive roman numbers.
-      - 
+
+## 2021.05.11
+**20. Determine the Shape**///
+   - status: **
+   - ans:
+   - explanation: The slope is necessary to classify the shapes in the first hand.
+      - Slope Formula: `m = (y2 - y1)/(x2 - x1)`
+      - Distance formula: `d = √((x2-x1)²+(y2-y1)²)`
+
