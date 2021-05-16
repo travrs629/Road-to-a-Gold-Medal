@@ -968,9 +968,17 @@
 
 ## 2021.05.11
 **20. Determine the Shape**///
-   - status: **
-   - ans:
+   - status: **Failed Miserably**
+   - ans: Cannot find the correct method in calculating the angles.
    - explanation: The slope is necessary to classify the shapes in the first hand.
       - Slope Formula: `m = (y2 - y1)/(x2 - x1)`
       - Distance formula: `d = √((x2-x1)²+(y2-y1)²)`
+
+## 2021.05.16
+**21. Power Strings - UVa10298**
+   - status: **Success**
+   - ans: Find the number of occurance of a character in a `String`.
+   - explanation: The largest the number of occurance the better, which means the smaller the accepted pattern the better.
+      - The one thing is that the pattern would not be bigger than half of the target `String`.
+      - Actually not a hard one, but understanding the question used a lot of time.
 
