@@ -982,3 +982,5 @@
       - The one thing is that the pattern would not be bigger than half of the target `String`.
       - Actually not a hard one, but understanding the question used a lot of time.
 
+## 2021.05.18
+**22-24. Missing records**
